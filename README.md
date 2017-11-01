@@ -1,5 +1,5 @@
 # SCCM
-This SCCM DLL was designed for imaging with custom build web application.  DLL will allow you to:
+This SCCM DLL was designed for imaging with custom build web application.  This DLL has been confirmed to work with SCCM 2007, 2012, and 2016.  DLL will allow you to:
 
 - Add and delete resources within SCCM
 - Create collections
