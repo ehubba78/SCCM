@@ -4,14 +4,12 @@ using SCCM.Common;
 using SCCM.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SCCM.Infrastructure
 {
+    /// <summary>
+    /// Queries in Infrastructure reference the WMI of the SCCM Primary Server.  For any SQL queries, refer to SQL/Queries
+    /// </summary>
     public class Queries
     {
         public static List<C_Collections> getAllCollections(string PrimaryServer, bool SDSOnly)
@@ -333,11 +331,11 @@ namespace SCCM.Infrastructure
 
                         item.LastUserLoggedIn = String.IsNullOrEmpty(reader["LastLogonUsername"].ToString()) ? "NA" : reader["LastLogonUsername"].ToString();
                         item.OS = String.IsNullOrEmpty(reader["operatingSystem"].ToString()) ? "UNKNOWN" : reader["operatingSystem"].ToString();
-                        item.AddRemoveSoftwares = SQLQueries.GetSoftware(item.ResourceID, SQLConnectionString);
+                        item.AddRemoveSoftwares = SQL.Queries.GetSoftware(item.ResourceID, SQLConnectionString);
 
                         try
                         {
-                            var results = SQLQueries.getScanDates(item.ResourceID, SQLConnectionString);
+                            var results = SQL.Queries.getScanDates(item.ResourceID, SQLConnectionString);
 
                             item.LastHardwareScan = String.IsNullOrEmpty(results[0]) ? "NA" : results[0];
                             item.LastSoftScan = String.IsNullOrEmpty(results[1]) ? "NA" : results[1];

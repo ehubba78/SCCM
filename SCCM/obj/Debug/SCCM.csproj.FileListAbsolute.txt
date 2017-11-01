@@ -1,0 +1,11 @@
+D:\Documents\GitHub\SCCM\SCCM\obj\Debug\SCCM.csprojResolveAssemblyReference.cache
+D:\Documents\GitHub\SCCM\SCCM\obj\Debug\SCCM.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\SCCM.dll
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\SCCM.pdb
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\adminui.wqlqueryengine.dll
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\AdvertStatus.dll
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\microsoft.configurationmanagement.dll
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\Microsoft.ConfigurationManagement.ManagementProvider.dll
+D:\Documents\GitHub\SCCM\SCCM\bin\Debug\AdvertStatus.pdb
+D:\Documents\GitHub\SCCM\SCCM\obj\Debug\SCCM.dll
+D:\Documents\GitHub\SCCM\SCCM\obj\Debug\SCCM.pdb

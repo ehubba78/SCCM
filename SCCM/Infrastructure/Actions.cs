@@ -59,7 +59,7 @@ namespace SCCM.Infrastructure
         /// </summary>
         /// <param name="getServer"></param>
         /// <param name="coll"></param>
-        /// <returns></returns>
+        /// <returns>QueryMembership ID to confirm successful or not</returns>
 
         public static Collection AddQueryMembershiptoCollection(string getServer, Collection coll)
         {
@@ -169,6 +169,13 @@ namespace SCCM.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Resets the PC by removing the resource from all collections where it's listed as a Direct Membership.
+        /// </summary>
+        /// <param name="getCentral">Primary SCCM Server</param>
+        /// <param name="getResID">Resource ID of device you are resetting</param>
+        /// <param name="getPCName">Resource Name of device you are resetting</param>
+        /// <returns>boolean response of request</returns>
         public static bool RESETPC(string getCentral, string getResID, string getPCName)
         {
             using (var connection = InternalFunctions.Connect(getCentral))
@@ -204,6 +211,13 @@ namespace SCCM.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Deletes a resource from a specific Collection
+        /// </summary>
+        /// <param name="getServer">Primary SCCM Server</param>
+        /// <param name="getResID">Resource ID of device</param>
+        /// <param name="workstation">Resource Name of device</param>
+        /// <returns>Returns Object</returns>
         public static DeleteFromCollection DeleteResourceFromSccm(string getServer, string getResID, string workstation)
         {
             var result = new DeleteFromCollection() { isFound = false };
@@ -225,6 +239,12 @@ namespace SCCM.Infrastructure
             return result;
         }
 
+        /// <summary>
+        /// Adds a SCCM Resource to an SCCM Collection
+        /// </summary>
+        /// <param name="getServer">Primary SCCM Server</param>
+        /// <param name="coll">Model Collection</param>
+        /// <returns>Collection Object</returns>
         public static Collection AddResourcetoCollection(string getServer, Collection coll)
         {
             using (var connect = InternalFunctions.Connect(getServer))
@@ -275,16 +295,14 @@ namespace SCCM.Infrastructure
                     throw ex;
                 }
             }
-        }
+        }     
 
-        public static IResultObject SCCMQuery(string getServer, string getQuery)
-        {
-            using (var connection = InternalFunctions.Connect(getServer))
-            {
-                return connection.QueryProcessor.ExecuteQuery(getQuery);
-            }
-        }
-
+        /// <summary>
+        /// Retrieves a list of Task Sequences used for software bundles, primarily for Imaging purposes
+        /// </summary>
+        /// <param name="getServer">Primary SCCM Server</param>
+        /// <param name="getFilter">Based on the naming convention of the TS names. If named by region, filter will only populate based on credentials you provide.</param>
+        /// <returns>Profile Object</returns>
         public static List<Profiles> getBundles(string getServer, string getFilter)
         {
             string query;
@@ -332,6 +350,11 @@ namespace SCCM.Infrastructure
             return results;
         }
 
+        /// <summary>
+        /// Retrieves a collection of the Base Images available for imaging.  Package needs to include in comments <ACTIVE> or <BETA> to be used for filtering purposes.
+        /// </summary>
+        /// <param name="getServer">SCCM Primary Server</param>
+        /// <returns>Object of OS Base Images</returns>
         public static List<OS> getOSBaseImage(string getServer)
         {
             var results = new List<OS>();
@@ -365,7 +388,13 @@ namespace SCCM.Infrastructure
             return results;
         }
 
-        public static bool RefreshCollection(string CollectionID, bool is2012, string getServer)
+        /// <summary>
+        /// Triggers the Refresh command in SCCM WMI on a specific collection.
+        /// </summary>
+        /// <param name="CollectionID">Collection ID</param>        
+        /// <param name="getServer">Primary SCCM Server Name</param>
+        /// <returns>Return Boolean on status of request</returns>
+        public static bool RefreshCollection(string CollectionID, string getServer)
         {
             string getReturn;
 
@@ -382,6 +411,13 @@ namespace SCCM.Infrastructure
             return getReturn == "0";
         }
 
+        /// <summary>
+        /// Creates a New Resource in SCCM base on the information provided
+        /// </summary>
+        /// <param name="SCCMServer">SCCM Primary Server Name</param>
+        /// <param name="Workstation">Device Name</param>
+        /// <param name="getMACAddress">Device MAC Address (already validated if it's a valid address)</param>
+        /// <returns>Resource ID of the Device</returns>
         public static string AddWorkstationToSCCM(string SCCMServer, string Workstation, string getMACAddress)
         {
             using (var connect = InternalFunctions.Connect(SCCMServer))
@@ -404,6 +440,14 @@ namespace SCCM.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Imaging purposes, returns the Status value
+        /// </summary>
+        /// <param name="getBaseImageID">CollectionID</param>
+        /// <param name="getWorkstation">Device Name</param>
+        /// <param name="getServer">SCCM Primary Server</param>
+        /// <param name="StartTime">Time Imaging began</param>
+        /// <returns>Returns status string</returns>
         public static string getStatus(string getBaseImageID, string getWorkstation, string getServer,
             DateTime StartTime)
         {
@@ -429,6 +473,12 @@ namespace SCCM.Infrastructure
             return result;
         }
 
+        /// <summary>
+        /// Displays all devices listed in a Collection
+        /// </summary>
+        /// <param name="iD">Collection ID</param>
+        /// <param name="getServer">SCCM Primary Server Name</param>
+        /// <returns>List of devices</returns>
         public static List<CollectionBucket> GatherItems(string iD, string getServer)
         {
             var results = new List<CollectionBucket>();
@@ -492,6 +542,14 @@ namespace SCCM.Infrastructure
 
             return coll;
         }
+        /// <summary>
+        /// Removes a Device from a Collection
+        /// </summary>
+        /// <param name="ResourceID">ResourceID of the Device you want to remove</param>
+        /// <param name="CollectionID">Collection ID from which you want to remove the device</param>
+        /// <param name="WorkstationName">Device Name</param>
+        /// <param name="getServer">Primary SCCM Server Name</param>
+        /// 
         public static void RemoveResourceCollection(int ResourceID, string CollectionID, string WorkstationName, string getServer)
         {
             using (var connection = InternalFunctions.Connect(getServer))
@@ -528,6 +586,13 @@ namespace SCCM.Infrastructure
 
         }
 
+        /// <summary>
+        /// Confirms if Device exists in SCCM 
+        /// </summary>
+        /// <param name="connect">WMI Connection to SCCM Primary Server</param>
+        /// <param name="ResourceID">Resource ID of device in question</param>
+        /// <param name="CollectionID">Collection ID to validate if resource is listed</param>
+        /// <returns>Boolean of request</returns>
         public static bool DoesResExists(WqlConnectionManager connect, int ResourceID, string CollectionID)
         {
             var Query = "SELECT ResourceID FROM SMS_CM_Res_Coll_" + CollectionID;

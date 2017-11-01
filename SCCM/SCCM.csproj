@@ -33,6 +33,9 @@
     <Reference Include="adminui.wqlqueryengine">
       <HintPath>M:\WorkBackup\2015\axp.euc.sccm\bin\Debug\adminui.wqlqueryengine.dll</HintPath>
     </Reference>
+    <Reference Include="AdvertStatus">
+      <HintPath>M:\WorkBackup\2015\axp.euc.sccm\bin\Debug\AdvertStatus.dll</HintPath>
+    </Reference>
     <Reference Include="microsoft.configurationmanagement">
       <HintPath>M:\WorkBackup\2015\axp.euc.sccm\bin\Debug\microsoft.configurationmanagement.dll</HintPath>
     </Reference>
